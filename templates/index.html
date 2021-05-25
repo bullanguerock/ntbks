@@ -1,0 +1,54 @@
+{% extends 'base.html' %}}
+{% block content %}   
+    <container style="display: flex; flex-direction: column;">
+        <table>
+            <tr>
+                <td><h3>Presupuesto</h3></td>
+            </tr>
+            <tr>
+                
+                <td>
+                    <form method='post' id="presu_form" action="">
+                        {% csrf_token %}
+                        <input type="text" name="presupuesto" id="presupuesto">
+                        <select name="servicio" id="servicio">
+                            <option value="gamer">Gamer</option>
+                            <option value="ofimatica">Trabajo/Estudios</option>
+                        </select>
+                        <input type="submit" value="go">
+                    </form>
+                </td>                                
+            </tr>
+            </table>
+    </container>
+    <container style="display: flex; flex-direction: column;">
+            <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Proce</th>
+                    <th>GPU</th>
+                    <th>GPU Dedi</th>
+                    <th>Precio</th>
+                    <th>Puntaje</th>
+                    <!-- <th scope="col">Price</th> -->
+                </tr>
+            </thead>            
+            <tbody>              
+                {% for item in notes %}
+                <tr>
+                    <td>{{ item.nombre}}</td>               
+                    <td>{{ item.proce}}</td>
+                    <td>{{ item.gpu}}</td>
+                    <td>{{ item.gpuDedi}}</td>
+                    <td>{{ item.precio}}</td>
+                    <td><b>{{ item.puntaje2}}</b></td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>
+    </container>
+
+    
+   
+{% endblock %}

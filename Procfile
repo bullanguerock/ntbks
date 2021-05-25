@@ -1,0 +1,1 @@
+web: gunicorn ntbk_project.wsgi --log-file -
