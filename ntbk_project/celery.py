@@ -19,6 +19,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'ntbk_routine': {
         'task': 'ntbk.tasks.get_ntbk_data',
-        'schedule': 60.0
+        'schedule': 36000.0
     }
 }
