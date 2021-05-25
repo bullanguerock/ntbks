@@ -10,10 +10,18 @@
                 <td>
                     <form method='post' id="presu_form" action="">
                         {% csrf_token %}
+                        {% if presu %}                            
+                            <input type="text" name="presupuesto" id="presupuesto" value={{ presu }}>                     
+                        {% else %}
                         <input type="text" name="presupuesto" id="presupuesto">
+                        {% endif %}
                         <select name="servicio" id="servicio">
                             <option value="gamer">Gamer</option>
+                            {% if selected %}                            
+                                <option selected  value="ofimatica">Trabajo/Estudios</option>                            
+                            {% else %}
                             <option value="ofimatica">Trabajo/Estudios</option>
+                            {% endif %}
                         </select>
                         <input type="submit" value="go">
                     </form>

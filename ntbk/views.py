@@ -15,13 +15,17 @@ def index(request):
         if servicio == 'gamer':
             n1 = n.exclude(gpuDedi__startswith='No ')
             n2 = n1.filter(precioint__range =(0,presupuesto)).order_by('puntaje2')
-            return render(request, 'index.html',{'notes' : n2})
+            return render(request, 'index.html',{'notes' : n2,
+                                                 'presu' : presupuesto, 
+                                                }) 
         
         elif servicio == 'ofimatica':   
             n1 = n.filter(gpuDedi__startswith='No ')          
             n2 = n1.filter(puntaje2__range=(1, 55), precioint__range =(0,presupuesto)).order_by('puntaje2')
-            return render(request, 'index.html',{'notes' : n2})
-            
+            return render(request, 'index.html', {'notes' : n2, 
+                                                  'selected' : 'si',
+                                                  'presu' : presupuesto 
+                                                  })            
 
     else:
         n1 = n.filter(puntaje2__range=(1, 60), precioint__range =(0,0)).order_by('puntaje2')     
