@@ -3,7 +3,7 @@ from .models import Note, Rutina
 
 # Create your views here.
     
-
+# PRINCIPAL
 def index(request):
     presupuesto = 1000000
     rutina = Rutina.objects.latest('id')
@@ -31,6 +31,10 @@ def index(request):
         n1 = n.filter(puntaje2__range=(1, 60), precioint__range =(0,0)).order_by('puntaje2')     
   
     return render(request, 'index.html',{'notes' : n1})
+
+#TEST UI
+def testui(request):
+    return render(request, 'ui.html')
 
     
 
