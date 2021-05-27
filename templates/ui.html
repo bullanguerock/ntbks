@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}"> <!-- CSS reset -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Resource style -->
@@ -55,39 +55,66 @@
 		<section class="cd-gallery">
 			<ul>
 				{% for item in obj %}
-					{% if item.gpuDedi == 'No tarjeta de video dedicada' %}						
+
+					<!--- Oficina -->
+					{% if item.gpuDedi == 'No tarjeta de video dedicada' %}				
+						<!-- Ram -->
+						{% if item.ramint == 8 %}
+							{% if "SSD" in item.almace %}							
+								<li class="mix oficina check1 radio2 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>oficina 8gb ssd</h1>
+								</li>
+							{% else %}
+								<li class="mix oficina check1 radio option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>oficina 8gb hdd</h1>
+								</li>
+							{% endif %}
+
 						
-						{% if item.ramint > 7 %}
-							
-							<li class="mix oficina check1 radio2 option2">
-								<img src="{{ item.img }}" alt="Image 2">
-								<h2>{{ item.nombre }}</h2>
-								<h2>{{ item.precio }}</h2>
-								<h1>{{ item.puntaje1 }}</h1>
-								<h1>{{ item.puntaje2 }}</h1>
-								<h1>{{item.ramint}}</h1>				
-								<h1>no tengo video :( pero ram 8+</h1>
-							</li>
-						{% elif "SSD" in item.almace %}
-							<li class="mix oficina check2 radio2 option2">
-								<img src="{{ item.img }}" alt="Image 2">
-								<h2>{{ item.nombre }}</h2>
-								<h2>{{ item.precio }}</h2>
-								<h1>{{ item.puntaje1 }}</h1>
-								<h1>{{ item.puntaje2 }}</h1>
-								<h1>{{item.ramint}}</h1>
-								<h1>tengo ssd</h1>				
-								
-							</li>
+						{% elif item.ramint >= 12 %}
+							{% if "SSD" in item.almace %}							
+								<li class="mix oficina check2 radio2 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>oficina 12o+gb ssd</h1>
+								</li>
+							{% else %}
+								<li class="mix oficina check2 radio1 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>oficina 12o+gb hdd</h1>
+								</li>
+							{% endif %}
+
 						{% else %}
-							<li class="mix oficina radio2 option2">
+							<li class="mix oficina check radio2 option2">
 								<img src="{{ item.img }}" alt="Image 2">
 								<h2>{{ item.nombre }}</h2>
 								<h2>{{ item.precio }}</h2>
 								<h1>{{ item.puntaje1 }}</h1>
 								<h1>{{ item.puntaje2 }}</h1>
 								<h1>{{item.ramint}}</h1>				
-								<h1>no tengo video :(</h1>
+								<h1>oficina</h1>
 							</li>
 						{% endif %}						
 							
@@ -164,23 +191,19 @@
 				</div> <!-- cd-filter-block -->
 
 				<div class="cd-filter-block">
-					<h4>Recomendaciones 2021</h4>
+					<h4>Radio buttons</h4>
 
 					<ul class="cd-filter-content cd-filters list">
 						<li>
-							<input class="filter" data-filter=".check1" type="checkbox" id="checkbox1">
-			    			<label class="checkbox-label" for="checkbox1">RAM : 8GB+</label>
+							<input class="filter" data-filter=".check1" type="radio" name="radioButton" id="check1" checked>
+							<label class="radio-label" for="check1">RAM : 8GB</label>
 						</li>
 
 						<li>
-							<input class="filter" data-filter=".check2" type="checkbox" id="checkbox2">
-							<label class="checkbox-label" for="checkbox2">Almacenamiento : SSD</label>
+							<input class="filter" data-filter=".check2" type="radio" name="radioButton" id="check2">
+							<label class="radio-label" for="check2">RAM : 12GB+</label>
 						</li>
 
-						<!-- <li>
-							<input class="filter" data-filter=".check3" type="checkbox" id="checkbox3">
-							<label class="checkbox-label" for="checkbox3"></label>
-						</li> -->
 					</ul> <!-- cd-filter-content -->
 				</div> <!-- cd-filter-block -->
 
@@ -197,30 +220,26 @@
 								<option value=".option3">Option 3</option>
 								<option value=".option4">Option 4</option>
 							</select>
-						</div> <!-- cd-select -->
-				<!--	</div> <!-- cd-filter-content -->
-				<!--</div> <!-- cd-filter-block -->
+						</div> <! cd-select -->
+				<!--	</div> <! cd-filter-content -->
+				<!--</div> <!- cd-filter-block -->
 				<!---->
-				<!--<div class="cd-filter-block">
-					<h4>Radio buttons</h4>
+				<div class="cd-filter-block">
+					<h4>Almacenamiento</h4>
 
 					<ul class="cd-filter-content cd-filters list">
 						<li>
-							<input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+							<input class="filter" data-filter="" type="radio" name="storage" id="radio1" checked>
 							<label class="radio-label" for="radio1">All</label>
 						</li>
 
 						<li>
-							<input class="filter" data-filter=".radio2" type="radio" name="radioButton" id="radio2">
-							<label class="radio-label" for="radio2">Choice 2</label>
+							<input class="filter" data-filter=".radio2" type="radio" name="storage" id="radio2">
+							<label class="radio-label" for="radio2">SSD</label>
 						</li>
 
-						<li>
-							<input class="filter" data-filter=".radio3" type="radio" name="radioButton" id="radio3">
-							<label class="radio-label" for="radio3">Choice 3</label>
-						</li>
 					</ul> <!-- cd-filter-content -->
-			<!--	</div> <!-- cd-filter-block -->
+				</div> <!-- cd-filter-block -->
 			<!---->
 			</form>
 
