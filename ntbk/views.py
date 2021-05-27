@@ -37,7 +37,7 @@ def testui(request):
     rutina = Rutina.objects.latest('id')
     titulo = 'k fuentes'
     n = Note.objects.filter(id_rutina = rutina)
-    n1 = n.filter(puntaje2__range = (1,70), score_cpu__range = (3600,1000000)).order_by('precioint')
+    n1 = n.filter(puntaje2__range = (1,100), score_cpu__range = (3600,1000000)).order_by('precioint')
 
     return render(request, 'ui.html', {'obj' : n1})
 
