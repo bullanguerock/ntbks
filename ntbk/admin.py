@@ -12,6 +12,6 @@ class Rutinaadmin(admin.ModelAdmin):
 
 @admin.register(Note)
 class Noteadmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'puntaje1', 'puntaje2', 'proce','gpu','gpuDedi','ram', 'precioint', 'precio', 'id_rutina')
+    list_display = ('id','ramint', 'nombre', 'puntaje1', 'puntaje2', 'proce', 'score_cpu','gpu','gpuDedi','ram', 'precioint', 'precio', 'id_rutina')
     list_filter = ['id_rutina']
     search_fields = ['proce']

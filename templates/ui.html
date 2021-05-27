@@ -10,31 +10,128 @@
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}"> <!-- CSS reset -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Resource style -->
 	<script src="{% static 'js/modernizr.js' %}"></script> <!-- Modernizr -->
+
+	<!---- Vue : For prototyping or learning purposes, you can use the latest version with -->
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   	
 	<title>elijetunotebook</title>
 </head>
 <body>
 	<header class="cd-header">
-		<h1>Elige tu notebook</h1>
+		<!-----<h1>Elige tu notebook</h1>-->
+		<div id="titulo">
+			<h1>[[ myTitle ]]</h1>
+		</div>
+		<script type="text/javascript">
+			let app = new Vue({
+				el: "#titulo",
+				delimiters: ['[[', ']]'],
+				data: {
+				myTitle: 'elige tu notebook',
+				},
+			});
+		</script>
 	</header>
 
+	<div id="app">
+		<!-- <h1>[[ kwea ]]</h1> -->
+		
+	
 	<main class="cd-main-content">
 		<div class="cd-tab-filter-wrapper">
 			<div class="cd-tab-filter">
 				<ul class="cd-filters">
 					<li class="placeholder"> 
-						<a data-type="all" href="#0">All</a> <!-- selected option on mobile -->
+						<a data-type="all" href="#0">Todos</a> <!-- selected option on mobile -->
 					</li> 
-					<li class="filter"><a class="selected" href="#0" data-type="all">All</a></li>
-					<li class="filter" data-filter=".color-1"><a href="#0" data-type="color-1">Color 1</a></li>
-					<li class="filter" data-filter=".color-2"><a href="#0" data-type="color-2">Color 2</a></li>
+					<li class="filter"><a class="selected" href="#0" data-type="all">Todos</a></li>
+					<li class="filter" data-filter=".gamer"><a href="#0" data-type="gamer">Gamer</a></li>
+					<li class="filter" data-filter=".oficina"><a href="#0" data-type="oficina">Oficina</a></li>
 				</ul> <!-- cd-filters -->
 			</div> <!-- cd-tab-filter -->
 		</div> <!-- cd-tab-filter-wrapper -->
 
 		<section class="cd-gallery">
 			<ul>
-				<li class="mix color-1 check1 radio2 option3"><img src="{% static 'img/img-1.jpg' %}" alt="Image 1"></li>
+				{% for item in obj %}
+					{% if item.gpuDedi == 'No tarjeta de video dedicada' %}						
+						
+						{% if item.ramint > 7 %}
+							
+							<li class="mix oficina check1 radio2 option2">
+								<img src="{{ item.img }}" alt="Image 2">
+								<h2>{{ item.nombre }}</h2>
+								<h2>{{ item.precio }}</h2>
+								<h1>{{ item.puntaje1 }}</h1>
+								<h1>{{ item.puntaje2 }}</h1>
+								<h1>{{item.ramint}}</h1>				
+								<h1>no tengo video :( pero ram 8+</h1>
+							</li>
+						{% elif "SSD" in item.almace %}
+							<li class="mix oficina check2 radio2 option2">
+								<img src="{{ item.img }}" alt="Image 2">
+								<h2>{{ item.nombre }}</h2>
+								<h2>{{ item.precio }}</h2>
+								<h1>{{ item.puntaje1 }}</h1>
+								<h1>{{ item.puntaje2 }}</h1>
+								<h1>{{item.ramint}}</h1>
+								<h1>tengo ssd</h1>				
+								
+							</li>
+						{% else %}
+							<li class="mix oficina radio2 option2">
+								<img src="{{ item.img }}" alt="Image 2">
+								<h2>{{ item.nombre }}</h2>
+								<h2>{{ item.precio }}</h2>
+								<h1>{{ item.puntaje1 }}</h1>
+								<h1>{{ item.puntaje2 }}</h1>
+								<h1>{{item.ramint}}</h1>				
+								<h1>no tengo video :(</h1>
+							</li>
+						{% endif %}						
+							
+						
+						
+					{% else %}
+
+						{% if item.ramint > 7 %}								
+							<li class="mix gamer check1 radio2 option2">
+								<img src="{{ item.img }}" alt="Image 2">
+								<h2>{{ item.nombre }}</h2>
+								<h2>{{ item.precio }}</h2>
+								<h1>{{ item.puntaje1 }}</h1>
+								<h1>{{ item.puntaje2 }}</h1>
+								<h1>{{item.ramint}}</h1>				
+								<h1>video y ram 8+</h1>
+							</li>
+						{% elif "SSD" in item.almace %}
+							<li class="mix gamer check2 radio2 option2">
+								<img src="{{ item.img }}" alt="Image 2">
+								<h2>{{ item.nombre }}</h2>
+								<h2>{{ item.precio }}</h2>
+								<h1>{{ item.puntaje1 }}</h1>
+								<h1>{{ item.puntaje2 }}</h1>
+								<h1>{{item.ramint}}</h1>
+								<h1>video y tengo ssd</h1>				
+								
+							</li>
+						{% else %}
+						<li class="mix gamer radio2 option2">
+							<img src="{{ item.img }}" alt="Image 2">
+							<h2>{{ item.nombre }}</h2>
+							<h2>{{ item.precio }}</h2>
+							<h1>{{ item.puntaje1 }}</h1>
+							<h1>{{ item.puntaje2 }}</h1>
+							<h1>{{item.ramint}}</h1>				
+							<h1>tengo video :D:(</h1>
+						</li>
+					{% endif %}	
+					{% endif %}
+				{% endfor %}
+
+
+				<!--<li class="mix color-1 check1 radio2 option3"><img src="{% static 'img/img-1.jpg' %}" alt="Image 1"></li>
 				<li class="mix color-2 check2 radio2 option2"><img src="{% static 'img/img-2.jpg' %}" alt="Image 2"></li>
 				<li class="mix color-1 check3 radio3 option1"><img src="{% static 'img/img-3.jpg' %}" alt="Image 3"></li>
 				<li class="mix color-1 check3 radio2 option4"><img src="{% static 'img/img-4.jpg' %}" alt="Image 4"></li>
@@ -45,12 +142,12 @@
 				<li class="mix color-2 check1 radio2 option3"><img src="{% static 'img/img-9.jpg' %}" alt="Image 9"></li>
 				<li class="mix color-1 check3 radio2 option4"><img src="{% static 'img/img-10.jpg' %}" alt="Image 10"></li>
 				<li class="mix color-1 check3 radio3 option2"><img src="{% static 'img/img-11.jpg' %}" alt="Image 11"></li>
-				<li class="mix color-2 check1 radio3 option1"><img src="{% static 'img/img-12.jpg' %}" alt="Image 12"></li>
+				<li class="mix color-2 check1 radio3 option1"><img src="{% static 'img/img-12.jpg' %}" alt="Image 12"></li>-->
 				<li class="gap"></li>
 				<li class="gap"></li>
 				<li class="gap"></li>
 			</ul>
-			<div class="cd-fail-message">No results found</div>
+			<div class="cd-fail-message">No se encontraron resultados</div>
 		</section> <!-- cd-gallery -->
 
 
@@ -59,34 +156,35 @@
 		<div class="cd-filter">
 			<form>
 				<div class="cd-filter-block">
-					<h4>Search</h4>
+					<h4>Busqueda</h4>
 					
 					<div class="cd-filter-content">
-						<input type="search" placeholder="Try color-1...">
+						<input type="search" placeholder="Testing...">
 					</div> <!-- cd-filter-content -->
 				</div> <!-- cd-filter-block -->
 
 				<div class="cd-filter-block">
-					<h4>Check boxes</h4>
+					<h4>Recomendaciones 2021</h4>
 
 					<ul class="cd-filter-content cd-filters list">
 						<li>
 							<input class="filter" data-filter=".check1" type="checkbox" id="checkbox1">
-			    			<label class="checkbox-label" for="checkbox1">Option 1</label>
+			    			<label class="checkbox-label" for="checkbox1">RAM : 8GB+</label>
 						</li>
 
 						<li>
 							<input class="filter" data-filter=".check2" type="checkbox" id="checkbox2">
-							<label class="checkbox-label" for="checkbox2">Option 2</label>
+							<label class="checkbox-label" for="checkbox2">Almacenamiento : SSD</label>
 						</li>
 
-						<li>
+						<!-- <li>
 							<input class="filter" data-filter=".check3" type="checkbox" id="checkbox3">
-							<label class="checkbox-label" for="checkbox3">Option 3</label>
-						</li>
+							<label class="checkbox-label" for="checkbox3"></label>
+						</li> -->
 					</ul> <!-- cd-filter-content -->
 				</div> <!-- cd-filter-block -->
 
+				
 				<div class="cd-filter-block">
 					<h4>Select</h4>
 					
@@ -130,6 +228,28 @@
 
 		<a href="#0" class="cd-filter-trigger">Filters</a>
 	</main> <!-- cd-main-content -->
+</div>
+<script type="text/javascript">
+
+let app2 = new Vue({
+	el: '#app',
+	delimiters: ['[[', ']]'],
+	data: {
+	HTMLcontent: null,
+	},
+  	created() {
+  		this.HTMLcontent = `
+		  		<img src='{{ item.img }}' alt='Image 2'>
+				<h2>VUE {{ item.nombre }}</h2>
+				<h2>{{ item.precio }}</h2>
+				<h1>{{ item.puntaje1 }}</h1>
+				<h1>{{ item.puntaje2 }}</h1>
+				<h1>{{item.ramint}}</h1>
+		`;
+  	},
+});
+
+</script>
 <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
 <script src="{% static 'js/jquery.mixitup.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery -->

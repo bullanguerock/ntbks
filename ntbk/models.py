@@ -1,4 +1,6 @@
+import json
 from django.db import models
+from django.db.models import Value
 
 # Create your models here.
 
@@ -16,6 +18,8 @@ class Rutina(models.Model):
     def plus1Item(self):
         self.items = self.items + 1
 
+def get_default_dict():
+    return {'accept_list': [], 'reject_list': []}
 
 class Note(models.Model):
     id_rutina = models.ForeignKey(Rutina, on_delete=models.CASCADE)
@@ -35,20 +39,22 @@ class Note(models.Model):
     so = models.CharField('S.O.', max_length=100)
     almace = models.CharField('Almacenamiento', max_length=100)
     ram = models.CharField('RAM', max_length=100)
+    ramint = models.IntegerField('RAM INT', default=0)
     puertos = models.CharField('Puertos', max_length=100)
     dimensiones = models.CharField('Dimen', max_length=100)
     aplicaciones = models.CharField('Aplicaciones', max_length=100)
     gamming = models.CharField('Gaming', max_length=100)
     movilidad = models.CharField('Movilidad', max_length=100)
-    score_gpu = models.CharField('PuntajeGPU', max_length=50)
-    score_cpu = models.CharField('PuntajeCPU', max_length=50)
+    score_gpu = models.IntegerField('PuntajeGPU')
+    score_cpu = models.IntegerField('PuntajeCPU')
     precio = models.CharField('Precio', max_length=50)
     precioint = models.IntegerField('PrecioInt', default=0)
     puntaje1 = models.IntegerField('Puntaje1', default=0)
     puntaje2 = models.IntegerField('Puntaje2', default=0)
-    #json = models.JSONField()
-    solotodo_id = models.CharField('ID Solotodo', max_length=50)
-    #link_tienda = models.CharField('Link Tienda', max_length=150) 
+    solotodo_id = models.CharField('ID Solotodo', max_length=51)
+    dataj = models.JSONField(default=get_default_dict())
+
+    #linksd
 
     def __str__(self):
         return self.nombre
