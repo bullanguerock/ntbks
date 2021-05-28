@@ -118,42 +118,70 @@
 							</li>
 						{% endif %}						
 							
-						
+					<!--- End Oficina -->	
 						
 					{% else %}
+					<!--- Gamer -->
 
-						{% if item.ramint > 7 %}								
-							<li class="mix gamer check1 radio2 option2">
+						<!-- Ram -->
+						{% if item.ramint == 8 %}
+							{% if "SSD" in item.almace %}							
+								<li class="mix gamer check1 radio2 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>gamer 8gb ssd</h1>
+								</li>
+							{% else %}
+								<li class="mix gamer check1 radio option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>gamer 8gb hdd</h1>
+								</li>
+							{% endif %}
+
+						
+						{% elif item.ramint >= 12 %}
+							{% if "SSD" in item.almace %}							
+								<li class="mix gamer check2 radio2 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>gamer 12o+gb ssd</h1>
+								</li>
+							{% else %}
+								<li class="mix gamer check2 radio1 option2">
+									<img src="{{ item.img }}" alt="Image 2">
+									<h2>{{ item.nombre }}</h2>
+									<h2>{{ item.precio }}</h2>
+									<h1>{{ item.puntaje1 }}</h1>
+									<h1>{{ item.puntaje2 }}</h1>
+									<h1>{{item.ramint}}</h1>				
+									<h1>gamer 12o+gb hdd</h1>
+								</li>
+							{% endif %}
+
+						{% else %}
+							<li class="mix gamer check radio2 option2">
 								<img src="{{ item.img }}" alt="Image 2">
 								<h2>{{ item.nombre }}</h2>
 								<h2>{{ item.precio }}</h2>
 								<h1>{{ item.puntaje1 }}</h1>
 								<h1>{{ item.puntaje2 }}</h1>
 								<h1>{{item.ramint}}</h1>				
-								<h1>video y ram 8+</h1>
+								<h1>gamer</h1>
 							</li>
-						{% elif "SSD" in item.almace %}
-							<li class="mix gamer check2 radio2 option2">
-								<img src="{{ item.img }}" alt="Image 2">
-								<h2>{{ item.nombre }}</h2>
-								<h2>{{ item.precio }}</h2>
-								<h1>{{ item.puntaje1 }}</h1>
-								<h1>{{ item.puntaje2 }}</h1>
-								<h1>{{item.ramint}}</h1>
-								<h1>video y tengo ssd</h1>				
-								
-							</li>
-						{% else %}
-						<li class="mix gamer radio2 option2">
-							<img src="{{ item.img }}" alt="Image 2">
-							<h2>{{ item.nombre }}</h2>
-							<h2>{{ item.precio }}</h2>
-							<h1>{{ item.puntaje1 }}</h1>
-							<h1>{{ item.puntaje2 }}</h1>
-							<h1>{{item.ramint}}</h1>				
-							<h1>tengo video :D:(</h1>
-						</li>
-					{% endif %}	
+						{% endif %}	
 					{% endif %}
 				{% endfor %}
 
