@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.not-visible{
+    display: none;
+}
+.container {
+  width: 300px;
+  border: dashed blue 1px;
+}
+.container img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+</style>
+    
+
+</head>
+<body>
+    <h1>Live Search</h1>
+    <form id="search-form" autocomplete="off" >
+        {% csrf_token %}
+        <input type="text" id="search-input">
+    </form>
+    <div id="results-box"></div>
+
+</body>
+<script src="{% static 'js/ajax.js' %}" defer></script>
+<script src="{% static 'js/jquery-2.1.1.js' %}" defer></script>
+
+
+</html>

@@ -1,0 +1,123 @@
+{% load static %}
+{% load ntbk_extras %}
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}"> <!-- CSS reset -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Resource style -->
+    <script src="{% static 'js/modernizr.js' %}"></script> <!-- Modernizr -->
+	
+ 	
+	<title>elijetunotebook</title>
+</head>
+<body>
+	<header class="cd-header">
+		<a href="/filters"><h1>Elige tu notebook</h1></a>
+	</header>	
+		
+	
+	<main class="cd-main-content">
+
+        <!-- Tab Filtros -->
+		<div class="cd-tab-filter-wrapper">
+			<div class="cd-tab-filter">
+				<ul class="cd-filters">
+					<li class="placeholder"> 
+						<a data-type="all" href="#0">Todos</a> <!-- selected option on mobile -->
+					</li> 
+					<li class="filter"><a class="selected" href="">Todos</a></li>
+					<li class="filter" ><a href="" >Gamer</a></li>
+					<li class="filter" ><a href="" >Oficina</a></li>
+				</ul> <!-- cd-filters -->
+			</div> <!-- cd-tab-filter -->
+		</div> <!-- cd-tab-filter-wrapper -->
+        
+        <!-- End Tab Filtros -->
+
+        <!-- Galeria -->
+        <section class="cd-gallery">
+            {% for ntbk in ntbk_page_obj %}
+                <h2>{{ ntbk.nombre }}</h2><br>
+                <h2>{{ ntbk.ramint }}</h2><br>
+                <h2>{{ ntbk.precio }}</h2><br>
+                <br><br>
+            {% endfor %}        
+
+
+            <!-- Pagination -->
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if ntbk_page_obj.has_previous %}
+                        <a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; First</a>
+                        <a href="{% my_url ntbk_page_obj.previous_page_number 'page' request.GET.urlencode %}"> Previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ ntbk_page_obj.number }} of {{ ntbk_page_obj.paginator.num_pages }} 
+                    </span>
+
+                    {% if ntbk_page_obj.has_next %}                
+                        <a href="{% my_url ntbk_page_obj.next_page_number 'page' request.GET.urlencode %}"> Next</a>
+                        <a href="{% my_url ntbk_page_obj.paginator.num_pages 'page' request.GET.urlencode %}"> Last</a>
+                    {% endif %}
+
+                </span>
+            
+            </div>
+            <!-- End Pagination -->
+        </section>
+        <!-- End Galeria -->
+
+		<!-- Filtros -->
+
+        <div class="cd-filter">
+            <form metohd='get'>
+
+                {# filtered_ntbks.form.as_p #}
+                <div class="cd-filter-block">
+                    <h4>Nombre</h4>
+                    <div class="cd-filter-content">
+                        {{ filtered_ntbks.form.nombre }}
+                    </div>
+                </div>
+                
+                <div class="cd-filter-block">
+                    <h4>Memoria Ram</h4>
+                    <div class="cd-filter-content">
+                        {{ filtered_ntbks.form.ramint }}
+                    </div>                    
+                </div>
+                
+                <div class="cd-filter-block">
+                    <h4>Precio</h4>
+                    <div class="cd-filter-content">
+                        {{ filtered_ntbks.form.precio }}
+                    </div>
+                </div>
+                
+
+                <input type="submit" value="Press">
+
+                <a href="#0" class="cd-close">Cerrar</a>
+            </form>
+        </div>
+
+        <a href="#" class="cd-filter-trigger">Filtros</a>
+
+        <!-- End Filtros -->
+
+		
+	</main> <!-- cd-main-content -->
+
+
+    <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
+    
+    <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery -->
+</body>
+</html>
