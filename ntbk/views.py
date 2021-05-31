@@ -2,7 +2,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from .models import Note, Rutina
 
-from .filters import NtbkFilter
+from .filters import NtbkFilter, RangeFilter
 
 from django.core.paginator import Paginator
 
@@ -57,9 +57,10 @@ def testui(request):
 def testfilters(request):
     rutina = Rutina.objects.latest('id')
     n = Note.objects.filter(id_rutina = rutina)
-    n1 = n.filter(ramint__range= (6,1000),puntaje2__range = (1,100), score_cpu__range = (3600,1000000)).order_by('precioint')
+    n1 = n.filter(ramint__range= (4,1024),puntaje2__range = (1,100000), score_cpu__range = (3600,1000000)).order_by('precioint')
 
     filtered_ntbks = NtbkFilter(request.GET, queryset=n1)
+    
 
     paginated_filtered_ntbks = Paginator(filtered_ntbks.qs, 16)
     page_number = request.GET.get('page')

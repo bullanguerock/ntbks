@@ -1,10 +1,13 @@
 from django.db.models.fields import BooleanField
+from django.forms.widgets import Select
 import django_filters
-from django_filters.filters import BooleanFilter, CharFilter
+from django_filters import widgets
+from django_filters.filters import BooleanFilter, CharFilter , AllValuesFilter, NumberFilter , RangeFilter
 
 from .models import Note
 
 from django.db.models import Q
+
 
 def multiple_search(queryset, name, value):
     queryset = queryset.filter(
@@ -20,9 +23,11 @@ class NtbkFilter(django_filters.FilterSet):
 
     q = CharFilter(method=multiple_search)
     g = CharFilter(field_name='gpuDedi', lookup_expr='icontains')
-    ram = CharFilter(field_name='ram', lookup_expr='icontains')
+    #ramint = CharFilter(field_name='ram', lookup_expr='icontains')
+    ramint= AllValuesFilter(field_name='ramint', widget=Select(attrs={ 'class' : 'filter'}))
     nombre = q
 
     class Meta:
         model = Note
-        fields = ['ramint', 'precio']
+        fields = ['precio']
+        
