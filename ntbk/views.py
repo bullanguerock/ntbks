@@ -71,12 +71,25 @@ def testfilters(request):
 
 #ajax test
 def main_view(request):
-    return render(request, 'start.html', {})
+    rutina = Rutina.objects.latest('id')
+    n = Note.objects.filter(id_rutina = rutina)
+    n1 = n.filter(ramint__range= (4,1000),puntaje2__range = (1,100), score_cpu__range = (3600,1000000)).order_by('precioint')
 
-def search_results(request):
+    filtered_ntbks = NtbkFilter(request.GET, queryset=n1)
+
+    paginated_filtered_ntbks = Paginator(filtered_ntbks.qs, 20)
+    page_number = request.GET.get('page')
+    ntbk_page_obj = paginated_filtered_ntbks.get_page(page_number)    
+
+    return render(request, 'ntbks.html', {'ntbk_page_obj' : ntbk_page_obj ,
+                                          'filtered_ntbks' : filtered_ntbks ,
+                                        })
+
+#def search_results(request):
     if request.is_ajax():
         game = request.POST.get('game')
-        qs = Note.objects.filter(puntaje2__range=(1, 60), nombre__icontains=game)
+        rutina = Rutina.objects.latest('id')
+        qs = Note.objects.filter(id_rutina = rutina, puntaje2__range=(1, 60), nombre__icontains=game)
         
         if len(qs) > 0 and len(game) > 0:
             data = []
@@ -92,6 +105,16 @@ def search_results(request):
         else:
             res = 'No games found...'
         return JsonResponse({'data' : res})
+    return JsonResponse({})
+
+def search_results(request):
+    if request.is_ajax():
+        game = request.POST.get('game')
+        red = "?q="+game
+        json = {"redirect" : True,
+                "redirect_url": red , 
+               }
+        return JsonResponse(json)
     return JsonResponse({})
 
 

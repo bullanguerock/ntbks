@@ -7,38 +7,29 @@ const resultsBox = document.getElementById('results-box')
 const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
 console.log(csrf)
 
+const delayKeyUp = (() => {
+    let timer = null;
+    const delay = (func, ms) => {
+        timer ? clearTimeout(timer): null
+        timer = setTimeout(func, ms)
+    }
+    return delay
+})();
+
 const sendSearchData = (game)=> {
-    $.ajax({
+    $.ajax({        
         type :'POST',
-        url :'ajax/search/',
+        url :'ntbks/search/',
         data: {
             'csrfmiddlewaretoken' : csrf,
             'game' : game,
         },
         success: (res)=> {
-            console.log(res.data);
-            const data = res.data
-            if (Array.isArray(data)) {
-                resultsBox.classList.remove('not-visible')
-                resultsBox.innerHTML = ""
-                data.forEach(game =>{               
-                    resultsBox.innerHTML += `
-                        <div class="container">
-                            <img src="${game.img}">
-                            <p>${game.nombre}<p><br>
-                            <p>${game.precio}<p><br>
-                        </div>
-                    `
-                })
-            }else {
-                if (searchInput.value.length > 0) {
-                    resultsBox.innerHTML = `
-                    <p>${data}<p><br>
-                `
-                } else {
-                    resultsBox.classList.add('not-visible')
-                }
+            console.log(res.redirect_url);
+            if (res.redirect) {
+                window.location.href = res.redirect_url;
             }
+            
         },
         error: (err)=> {
             console.log(err)
@@ -48,6 +39,5 @@ const sendSearchData = (game)=> {
 
 searchInput.addEventListener('keyup', e=>{
     console.log(e.target.value)
-
-    sendSearchData(e.target.value)
+    delayKeyUp(() => {sendSearchData(e.target.value)}, 1000);
 })

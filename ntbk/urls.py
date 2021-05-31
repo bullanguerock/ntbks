@@ -5,6 +5,6 @@ urlpatterns = [
     path('', testui),
     path('test', index),
     path('filters', testfilters),
-    path('ajax', main_view),
-    path('ajax/search/', search_results),
+    path('ntbks', main_view),
+    path('ntbks/search/', search_results),
 ]
