@@ -11,13 +11,28 @@
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}"> <!-- CSS reset -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Resource style -->
     <script src="{% static 'js/modernizr.js' %}"></script> <!-- Modernizr -->
+    <style>
+        .not-visible{
+            display: none;
+        }
+        .container {
+            width: 25%;
+            box-sizing: border-box;
+            border: #41307c 1px;
+        }
+        .container img {
+          max-height: 100%;
+          max-width: 100%;
+        }
+    </style>
+        
 	
  	
 	<title>elijetunotebook</title>
 </head>
 <body>
 	<header class="cd-header">
-		<a href="/filters"><h1>Elige tu notebook</h1></a>
+		<a href=""><h1>Elige tu notebook</h1></a>
 	</header>	
 		
 	
@@ -41,12 +56,20 @@
 
         <!-- Galeria -->
         <section class="cd-gallery">
-            {% for ntbk in ntbk_page_obj %}
-                <h2>{{ ntbk.nombre }}</h2><br>
-                <h2>{{ ntbk.ramint }}</h2><br>
-                <h2>{{ ntbk.precio }}</h2><br>
-                <br><br>
-            {% endfor %}        
+            <div class="flex" style="display: flex; flex-wrap: wrap;">
+                {% for ntbk in ntbk_page_obj %}
+                    <div class="container">
+                        <img src="{{ ntbk.img }}">
+                        {{ ntbk.nombre }}<br>
+                        {{ ntbk.proce }}<br>
+                        {{ ntbk.gpu }}<br>
+                        {{ ntbk.gpuDedi }}<br>
+                        {{ ntbk.ramint }}<br>
+                        {{ ntbk.precio }}
+                        
+                    </div>
+                    <br><br>
+                {% endfor %}        
 
 
             <!-- Pagination -->
@@ -81,14 +104,14 @@
 
                 {# filtered_ntbks.form.as_p #}
                 <div class="cd-filter-block">
-                    <h4>Nombre</h4>
+                    <h4>Busqueda</h4>
                     <div class="cd-filter-content">
                         {{ filtered_ntbks.form.nombre }}
                     </div>
                 </div>
                 
                 <div class="cd-filter-block">
-                    <h4>Memoria Ram</h4>
+                    <h4>Ram</h4>
                     <div class="cd-filter-content">
                         {{ filtered_ntbks.form.ramint }}
                     </div>                    

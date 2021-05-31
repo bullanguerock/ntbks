@@ -104,16 +104,24 @@
         
 
         <div class="cd-filter">
-            <form id="search-form" autocomplete="off">
-                <div class="cd-filter-block">            
-                    {% csrf_token %}
+                       
+                <div class="cd-filter-block">     
                     <h4>Nombre</h4>
+                    {% csrf_token %}                    
                     <div class="cd-filter-content">
                         <input type="text" id="search-input">
                     </div>
                 </div>
+
+                <div class="cd-filter-block">     
+                    <h4>Ram</h4>
+                    {% csrf_token %} 
+                    <div class="cd-filter-content">
+                        <input type="text" id="ram-input">
+                    </div>
+                </div>
                 <a href="#0" class="cd-close">Cerrar</a>
-            </form>
+            
             
 
 
