@@ -61,7 +61,7 @@ def testfilters(request):
 
     filtered_ntbks = NtbkFilter(request.GET, queryset=n1)
 
-    paginated_filtered_ntbks = Paginator(filtered_ntbks.qs, 4)
+    paginated_filtered_ntbks = Paginator(filtered_ntbks.qs, 16)
     page_number = request.GET.get('page')
     ntbk_page_obj = paginated_filtered_ntbks.get_page(page_number)    
 
@@ -109,10 +109,13 @@ def main_view(request):
 
 def search_results(request):
     if request.is_ajax():
-        game = request.POST.get('game')
-        red = "?q="+game
+        query = request.POST.get('query')
+        ram = request.POST.get('ram')
+        red = "?q="+query+"&ram="+ram
         json = {"redirect" : True,
-                "redirect_url": red , 
+                "redirect_url": red ,
+                "keepram" : ram,
+                "keepq" : query,
                }
         return JsonResponse(json)
     return JsonResponse({})

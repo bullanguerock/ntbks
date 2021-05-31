@@ -3,6 +3,11 @@ const url = window.location.href
 const searchForm = document.getElementById('search-form')
 const searchInput = document.getElementById('search-input')
 const resultsBox = document.getElementById('results-box')
+const ramInput = document.getElementById('ram-input')
+
+var q = searchInput.value
+var ramq = ramInput.value
+
 
 const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
 console.log(csrf)
@@ -16,13 +21,14 @@ const delayKeyUp = (() => {
     return delay
 })();
 
-const sendSearchData = (game)=> {
+const sendSearchData = (query, ram)=> {
     $.ajax({        
         type :'POST',
         url :'ntbks/search/',
         data: {
             'csrfmiddlewaretoken' : csrf,
-            'game' : game,
+            'query' : query,
+            'ram' : ram,
         },
         success: (res)=> {
             console.log(res.redirect_url);
@@ -38,6 +44,13 @@ const sendSearchData = (game)=> {
 }
 
 searchInput.addEventListener('keyup', e=>{
-    console.log(e.target.value)
-    delayKeyUp(() => {sendSearchData(e.target.value)}, 1000);
+    q = e.target.value
+    console.log(q)
+    delayKeyUp(() => {sendSearchData(q, ramq)}, 1000);
+})
+
+ramInput.addEventListener('keyup', e=>{
+    ramq = e.target.value
+    console.log(ramInput)
+    delayKeyUp(() => {sendSearchData(q, ramq)}, 1000);
 })

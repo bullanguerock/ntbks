@@ -20,6 +20,8 @@ class NtbkFilter(django_filters.FilterSet):
 
     q = CharFilter(method=multiple_search)
     g = CharFilter(field_name='gpuDedi', lookup_expr='icontains')
+    ram = CharFilter(field_name='ram', lookup_expr='icontains')
+    nombre = q
 
     class Meta:
         model = Note
