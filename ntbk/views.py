@@ -57,14 +57,14 @@ def testui(request):
 def testfilters(request):
     rutina = Rutina.objects.latest('id')
     n = Note.objects.filter(id_rutina = rutina)
-    n1 = n.filter(ramint__range= (4,1024),puntaje2__range = (1,100000), score_cpu__range = (3600,1000000)).order_by('precioint')
+    n1 = n.filter(ramint__range= (4,1024),puntaje2__range = (1,100000), score_cpu__range = (1,1000000)).order_by('precioint')
 
     filtered_ntbks = NtbkFilter(request.GET, queryset=n1)
     
 
     paginated_filtered_ntbks = Paginator(filtered_ntbks.qs, 16)
     page_number = request.GET.get('page')
-    ntbk_page_obj = paginated_filtered_ntbks.get_page(page_number)    
+    ntbk_page_obj = paginated_filtered_ntbks.get_page(page_number)   
 
     return render(request, 'test_filters.html', {'ntbk_page_obj' : ntbk_page_obj ,
                                                  'filtered_ntbks' : filtered_ntbks ,
