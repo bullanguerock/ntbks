@@ -2,12 +2,18 @@ from django.db.models.fields import BooleanField
 from django.forms.widgets import Input, Select
 import django_filters
 from django_filters import widgets
-from django_filters.filters import BooleanFilter, CharFilter , AllValuesFilter, NumberFilter , RangeFilter
+from django_filters.filters import BooleanFilter, CharFilter , AllValuesFilter, NumberFilter , RangeFilter, ChoiceFilter
 
 from .models import Note
 
 from django.db.models import Q
 
+
+FILTER_CHOICES = (
+    ('', 'Todos'),
+    ('GB', 'Gamer'),
+    ('No tar', 'Oficina')
+)
 
 def multiple_search(queryset, name, value):
     queryset = queryset.filter(
@@ -22,13 +28,14 @@ def multiple_search(queryset, name, value):
 class NtbkFilter(django_filters.FilterSet):
 
     q = CharFilter(method=multiple_search, widget=Input(attrs={ 'type' : 'search',
-                                                                'placeholder' : 'mm food...',
+                                                                'placeholder' : '...',
                                                                 'autocomplete' : 'off',
                                                                }))
     g = CharFilter(field_name='gpuDedi', lookup_expr='icontains')
     #ramint = CharFilter(field_name='ram', lookup_expr='icontains')
     ramint = AllValuesFilter(field_name='ramint', widget=Select(attrs={ 'class' : 'filter'}))
-    precioRange = RangeFilter(field_name='precioint')
+    p = RangeFilter(field_name='precioint')
+    tipo = ChoiceFilter(field_name='gpuDedi', choices=FILTER_CHOICES, lookup_expr='icontains')
 
     class Meta:
         model = Note

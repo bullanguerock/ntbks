@@ -1,4 +1,4 @@
-from ntbk.models import Note, Rutina
+from .models import Note, Rutina
 from django.contrib import admin
 
 # Register your models here.
