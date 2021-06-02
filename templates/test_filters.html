@@ -11,9 +11,13 @@
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}"> <!-- CSS reset -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Resource style -->
     <script src="{% static 'js/modernizr.js' %}"></script> <!-- Modernizr -->
+
+    <!-- no ui slider-->
+    <link href="{% static 'css/nouislider.css' %}" rel="stylesheet">
+    <script src="{% static 'js/nouislider.js' %}"></script>
+
+    <script src="{% static 'js/wNumb.min.js' %}"></script> <!-- wNum, formating prices -->
     
-    <link href="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.min.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>
 
     <style>
         .not-visible{
@@ -65,8 +69,9 @@
 						<a data-type="all" href="#0">Todos</a> <!-- selected option on mobile -->
 					</li> 
 					<li class="filter"><a class="selected" href="">Todos</a></li>
+                    <!--
 					<li class="filter" ><a href="" >Gamer</a></li>
-					<li class="filter" ><a href="" >Oficina</a></li>
+					<li class="filter" ><a href="" >Oficina</a></li>-->
 				</ul> <!-- cd-filters -->
 			</div> <!-- cd-tab-filter -->
 		</div> <!-- cd-tab-filter-wrapper -->
@@ -88,7 +93,8 @@
                         
                     </div>
                     <br><br>
-                {% endfor %}        
+                {% endfor %}
+            </div>        
 
 
             <!-- Pagination -->
@@ -119,13 +125,25 @@
 		<!-- Filtros -->
 
         <div class="cd-filter">
+            
             <form metohd='get'>
+
+                <div class="cd-filter-block">
+                    <h4>Precio</h4>
+                    <br>
+                    <br>
+                    <div class="cd-filter-content">
+                        <div id="slider"></div>
+                        <input type="hidden" name="precioRange_min" id="id_precioRange_0">
+                        <input type="hidden" name="precioRange_max" id="id_precioRange_1">
+                    </div>
+                </div>
 
                 {# filtered_ntbks.form.as_p #}
                 <div class="cd-filter-block">
                     <h4>Busqueda</h4>
                     <div class="cd-filter-content">
-                        {{ filtered_ntbks.form.nombre }}
+                        {{ filtered_ntbks.form.q }}
                     </div>
                 </div>
                 
@@ -136,13 +154,6 @@
                         {{ filtered_ntbks.form.ramint }}
                         </div>
                     </div>                    
-                </div>
-                
-                <div class="cd-filter-block">
-                    <h4>Precio</h4>
-                    <div class="cd-filter-content">
-                        {{ filtered_ntbks.form.precio }}
-                    </div>
                 </div>
                 
 
@@ -165,6 +176,125 @@
     <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
     
     <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery -->
+    <script>
+        function mergeTooltips(slider, threshold, separator) {
+
+            var textIsRtl = getComputedStyle(slider).direction === 'rtl';
+            var isRtl = slider.noUiSlider.options.direction === 'rtl';
+            var isVertical = slider.noUiSlider.options.orientation === 'vertical';
+            var tooltips = slider.noUiSlider.getTooltips();
+            var origins = slider.noUiSlider.getOrigins();
+
+            // Move tooltips into the origin element. The default stylesheet handles this.
+            tooltips.forEach(function (tooltip, index) {
+                if (tooltip) {
+                    origins[index].appendChild(tooltip);
+                }
+            });
+
+            slider.noUiSlider.on('update', function (values, handle, unencoded, tap, positions) {
+
+                var pools = [[]];
+                var poolPositions = [[]];
+                var poolValues = [[]];
+                var atPool = 0;
+
+                // Assign the first tooltip to the first pool, if the tooltip is configured
+                if (tooltips[0]) {
+                    pools[0][0] = 0;
+                    poolPositions[0][0] = positions[0];
+                    poolValues[0][0] = values[0];
+                }
+
+                for (var i = 1; i < positions.length; i++) {
+                    if (!tooltips[i] || (positions[i] - positions[i - 1]) > threshold) {
+                        atPool++;
+                        pools[atPool] = [];
+                        poolValues[atPool] = [];
+                        poolPositions[atPool] = [];
+                    }
+
+                    if (tooltips[i]) {
+                        pools[atPool].push(i);
+                        poolValues[atPool].push(values[i]);
+                        poolPositions[atPool].push(positions[i]);
+                    }
+                }
+
+                pools.forEach(function (pool, poolIndex) {
+                    var handlesInPool = pool.length;
+
+                    for (var j = 0; j < handlesInPool; j++) {
+                        var handleNumber = pool[j];
+
+                        if (j === handlesInPool - 1) {
+                            var offset = 0;
+
+                            poolPositions[poolIndex].forEach(function (value) {
+                                offset += 1000 - 10 * value;
+                            });
+
+                            var direction = isVertical ? 'bottom' : 'right';
+                            var last = isRtl ? 0 : handlesInPool - 1;
+                            var lastOffset = 1000 - 10 * poolPositions[poolIndex][last];
+                            offset = (textIsRtl && !isVertical ? 100 : 0) + (offset / handlesInPool) - lastOffset;
+
+                            // Center this tooltip over the affected handles
+                            tooltips[handleNumber].innerHTML = poolValues[poolIndex].join(separator);
+                            tooltips[handleNumber].style.display = 'block';
+                            tooltips[handleNumber].style[direction] = offset + '%';
+                        } else {
+                            // Hide this tooltip
+                            tooltips[handleNumber].style.display = 'none';
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+    <script>
+        var slider = document.getElementById('slider');
+        var inicio = 100000
+        var fin = 1000000
+        if (localStorage.getItem("preciomin") && localStorage.getItem("preciomax")){
+            inicio = localStorage.getItem("preciomin")
+            fin = localStorage.getItem("preciomax")
+        }
+
+        noUiSlider.create(slider, {
+            start: [inicio, fin],
+            behaviour: 'drag-tap',
+            tooltips: [true, true],
+            format: wNumb({
+                decimals: 0,
+                thousand: '.',
+                prefix: '$ '
+            }),
+            connect: true,  
+            range: {
+                'min': 0,
+                '10%': 200000,
+                '20%': 400000,
+                '30%': 600000,
+                '40%': 800000,
+                '60%': 1000000,
+                'max': 5000000,
+            }
+        });
+
+        slider.noUiSlider.on('update', function (values) {
+            var handleValue = slider.noUiSlider.get();
+            id_precioRange_0.value = handleValue[0].replace(/\D/g,'');
+            localStorage.setItem("preciomin",id_precioRange_0.value);
+                 
+
+            id_precioRange_1.value = handleValue[1].replace(/\D/g,'');
+            localStorage.setItem("preciomax", id_precioRange_1.value);
+            
+        });
+        
+        mergeTooltips(slider, 100, ' - ');
+    </script>
     
 </body>
 </html>
