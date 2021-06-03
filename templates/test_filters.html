@@ -48,8 +48,7 @@
           max-width: 100%;
         }
     </style>
-        
-	
+       	
  	
 	<title>elijetunotebook</title>
 </head>
@@ -84,15 +83,14 @@
                 {% for ntbk in ntbk_page_obj %}
                     <div class="container">
                         <img src="{{ ntbk.img }}">
+                        {{ ntbk.precio }}<br><br>
                         {{ ntbk.nombre }}<br>
                         {{ ntbk.proce }}<br>
                         {{ ntbk.gpu }}<br>
                         {{ ntbk.gpuDedi }}<br>
-                        {{ ntbk.ram }}<br>
-                        {{ ntbk.precio }}<br>
+                        {{ ntbk.ram }}<br>                        
                         {{ ntbk.almace }} <br>
-                        {{ ntbk.puntaje2 }}
-                        
+                        {{ ntbk.puntaje2 }}<br>                        
                     </div>
                     <br><br>
                 {% endfor %}
@@ -104,17 +102,17 @@
             <div class="pagination">
                 <span class="step-links">
                     {% if ntbk_page_obj.has_previous %}
-                        <a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; First</a>
-                        <a href="{% my_url ntbk_page_obj.previous_page_number 'page' request.GET.urlencode %}"> Previous</a>
+                        <a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; 1</a>
+                        <a href="{% my_url ntbk_page_obj.previous_page_number 'page' request.GET.urlencode %}"> << </a>
                     {% endif %}
 
                     <span class="current">
-                        Page {{ ntbk_page_obj.number }} of {{ ntbk_page_obj.paginator.num_pages }} 
+                        Pagina {{ ntbk_page_obj.number }} de {{ ntbk_page_obj.paginator.num_pages }} 
                     </span>
 
                     {% if ntbk_page_obj.has_next %}                
-                        <a href="{% my_url ntbk_page_obj.next_page_number 'page' request.GET.urlencode %}"> Next</a>
-                        <a href="{% my_url ntbk_page_obj.paginator.num_pages 'page' request.GET.urlencode %}"> Last</a>
+                        <a href="{% my_url ntbk_page_obj.next_page_number 'page' request.GET.urlencode %}"> >> </a>
+                        <a href="{% my_url ntbk_page_obj.paginator.num_pages 'page' request.GET.urlencode %}"> Ultima</a>
                     {% endif %}
 
                 </span>

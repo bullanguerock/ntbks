@@ -33,14 +33,14 @@ def RutinaNotebooks():
         soup = BeautifulSoup(req.text, "lxml")
         #for recorre 'targetas/items' de la pagina
         for link in soup.find_all("div", class_="price flex-grow"):
-            #encontrar id
+            #encontrar id y precio
             tostr = str(link)
             try:
                 found = re.search('/products/(.+?)-', tostr).group(1)
             except AttributeError:
                 found = 'error' # apply your error handling
 
-            #encontrar precio 
+            #precio 
             precio = link.get_text()
             
             #guardar Api Info
