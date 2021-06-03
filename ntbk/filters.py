@@ -32,7 +32,6 @@ class NtbkFilter(django_filters.FilterSet):
                                                                 'autocomplete' : 'off',
                                                                }))
     g = CharFilter(field_name='gpuDedi', lookup_expr='icontains')
-    #ramint = CharFilter(field_name='ram', lookup_expr='icontains')
     ramint = AllValuesFilter(field_name='ramint', widget=Select(attrs={ 'class' : 'filter'}))
     p = RangeFilter(field_name='precioint')
     tipo = ChoiceFilter(field_name='gpuDedi', choices=FILTER_CHOICES, lookup_expr='icontains')

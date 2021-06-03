@@ -1,5 +1,4 @@
 jQuery(document).ready(function($){
-	triggerFilter(true);
 	//open/close lateral filter
 	$('.cd-filter-trigger').on('click', function(){
 		triggerFilter(true);
